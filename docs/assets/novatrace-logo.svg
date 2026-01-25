@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="traceGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4"/>
+      <stop offset="50%" style="stop-color:#3b82f6"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24"/>
+      <stop offset="100%" style="stop-color:#f59e0b"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="200" cy="200" r="190" fill="url(#bgGrad)" stroke="#334155" stroke-width="3"/>
+  
+  <!-- Nova star burst -->
+  <g transform="translate(200, 200)" filter="url(#glow)">
+    <!-- Main star points -->
+    <polygon points="0,-80 10,-25 0,-30 -10,-25" fill="url(#starGrad)" transform="rotate(0)"/>
+    <polygon points="0,-80 10,-25 0,-30 -10,-25" fill="url(#starGrad)" transform="rotate(45)"/>
+    <polygon points="0,-80 10,-25 0,-30 -10,-25" fill="url(#starGrad)" transform="rotate(90)"/>
+    <polygon points="0,-80 10,-25 0,-30 -10,-25" fill="url(#starGrad)" transform="rotate(135)"/>
+    <polygon points="0,-80 10,-25 0,-30 -10,-25" fill="url(#starGrad)" transform="rotate(180)"/>
+    <polygon points="0,-80 10,-25 0,-30 -10,-25" fill="url(#starGrad)" transform="rotate(225)"/>
+    <polygon points="0,-80 10,-25 0,-30 -10,-25" fill="url(#starGrad)" transform="rotate(270)"/>
+    <polygon points="0,-80 10,-25 0,-30 -10,-25" fill="url(#starGrad)" transform="rotate(315)"/>
+    
+    <!-- Inner glow -->
+    <circle r="20" fill="url(#starGrad)" opacity="0.9"/>
+    <circle r="12" fill="#fef3c7"/>
+  </g>
+  
+  <!-- Trace lines - forensic trail pattern -->
+  <g stroke="url(#traceGrad)" stroke-width="3" fill="none" opacity="0.8">
+    <!-- Circular scanning lines -->
+    <circle cx="200" cy="200" r="60" stroke-dasharray="10,5"/>
+    <circle cx="200" cy="200" r="100" stroke-dasharray="15,8"/>
+    <circle cx="200" cy="200" r="140" stroke-dasharray="20,10"/>
+    
+    <!-- Data flow lines -->
+    <path d="M 200 60 Q 280 100 320 200" stroke-dasharray="8,4"/>
+    <path d="M 340 200 Q 300 280 200 340" stroke-dasharray="8,4"/>
+    <path d="M 200 340 Q 120 300 60 200" stroke-dasharray="8,4"/>
+    <path d="M 60 200 Q 100 120 200 60" stroke-dasharray="8,4"/>
+  </g>
+  
+  <!-- Detection nodes -->
+  <g fill="url(#traceGrad)">
+    <circle cx="200" cy="60" r="8"/>
+    <circle cx="340" cy="200" r="8"/>
+    <circle cx="200" cy="340" r="8"/>
+    <circle cx="60" cy="200" r="8"/>
+    <circle cx="295" cy="105" r="6"/>
+    <circle cx="295" cy="295" r="6"/>
+    <circle cx="105" cy="295" r="6"/>
+    <circle cx="105" cy="105" r="6"/>
+  </g>
+  
+  <!-- Magnifying glass hint -->
+  <g transform="translate(280, 280)" stroke="#94a3b8" stroke-width="4" fill="none">
+    <circle cx="0" cy="0" r="30"/>
+    <line x1="21" y1="21" x2="45" y2="45"/>
+  </g>
+</svg>

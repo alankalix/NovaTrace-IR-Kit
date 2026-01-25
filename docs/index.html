@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaTrace</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Instrument Sans', -apple-system, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        a { color: inherit; text-decoration: none; }
+        
+        /* Nav */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 600;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+        }
+        
+        .logo svg { width: 32px; height: 32px; }
+        
+        .nav-right { display: flex; gap: 32px; align-items: center; }
+        .nav-right a { font-size: 14px; opacity: 0.7; transition: opacity 0.2s; }
+        .nav-right a:hover { opacity: 1; }
+        
+        .dl-btn {
+            background: #fff;
+            color: #000;
+            padding: 10px 20px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            opacity: 1 !important;
+        }
+        
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 100px 40px 60px;
+            position: relative;
+        }
+        
+        .hero-glow {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(34,211,238,0.08) 0%, rgba(167,139,250,0.04) 40%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero-logo {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 24px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .tag {
+            display: inline-block;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.5;
+            margin-bottom: 24px;
+        }
+        
+        h1 {
+            font-size: clamp(42px, 10vw, 72px);
+            font-weight: 600;
+            line-height: 1;
+            letter-spacing: -3px;
+            margin-bottom: 20px;
+        }
+        
+        .hero p {
+            font-size: 17px;
+            line-height: 1.6;
+            opacity: 0.5;
+            max-width: 480px;
+            margin-bottom: 32px;
+        }
+        
+        .hero-btns { display: flex; gap: 16px; }
+        
+        .btn {
+            padding: 14px 28px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .btn:hover { transform: translateY(-2px); }
+        
+        .btn-white { background: #fff; color: #000; }
+        .btn-outline { border: 1px solid rgba(255,255,255,0.2); }
+        .btn-outline:hover { border-color: rgba(255,255,255,0.5); }
+        
+        /* Stats row */
+        .stats {
+            display: flex;
+            gap: 48px;
+            margin-top: 60px;
+            padding-top: 32px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        
+        .stat { text-align: center; }
+        
+        .stat-value {
+            font-size: 32px;
+            font-weight: 600;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, #22d3ee, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.4;
+            margin-top: 4px;
+        }
+        
+        /* Sections */
+        section { padding: 90px 40px; }
+        
+        .section-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.4;
+            margin-bottom: 12px;
+        }
+        
+        h2 {
+            font-size: clamp(28px, 5vw, 44px);
+            font-weight: 600;
+            letter-spacing: -1.5px;
+            margin-bottom: 36px;
+            max-width: 600px;
+        }
+        
+        /* Features */
+        .features-section { background: #050505; }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .feature {
+            background: #050505;
+            padding: 32px;
+        }
+        
+        .feature-icon {
+            width: 36px;
+            height: 36px;
+            margin-bottom: 16px;
+            opacity: 0.8;
+        }
+        
+        .feature h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .feature p {
+            font-size: 13px;
+            line-height: 1.6;
+            opacity: 0.45;
+        }
+        
+        /* Scrolling artifacts - two rows */
+        .what-section {
+            background: #000;
+            overflow: hidden;
+            padding-bottom: 60px;
+        }
+        
+        .what-wrapper {
+            overflow: hidden;
+            width: 100%;
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        }
+        
+        .what-track {
+            display: flex;
+            gap: 12px;
+            width: max-content;
+            padding: 8px 0;
+        }
+        
+        .what-track.row1 {
+            animation: marquee-left 35s linear infinite;
+        }
+        
+        .what-track.row2 {
+            animation: marquee-right 40s linear infinite;
+        }
+        
+        .what-track:hover {
+            animation-play-state: paused;
+        }
+        
+        @keyframes marquee-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        @keyframes marquee-right {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+        }
+        
+        .what-item {
+            padding: 14px 24px;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 100px;
+            font-size: 14px;
+            white-space: nowrap;
+            transition: all 0.2s;
+        }
+        
+        .what-item:hover {
+            border-color: rgba(255,255,255,0.2);
+            background: rgba(255,255,255,0.05);
+        }
+        
+        /* Code */
+        .code-section {
+            background: #050505;
+        }
+        
+        .code-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+            align-items: center;
+        }
+        
+        .code-box {
+            background: #0a0a0a;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .code-header {
+            padding: 14px 18px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            gap: 6px;
+        }
+        
+        .code-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        .code-dot:nth-child(1) { background: #ff5f57; }
+        .code-dot:nth-child(2) { background: #febc2e; }
+        .code-dot:nth-child(3) { background: #28c840; }
+        
+        .code-body {
+            padding: 24px;
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-size: 13px;
+            line-height: 2;
+        }
+        
+        .code-body .c { opacity: 0.3; }
+        .code-body .g { color: #22d3ee; }
+        .code-body .p { color: #a78bfa; }
+        
+        /* CTA */
+        .cta-section {
+            text-align: center;
+            padding: 100px 40px;
+            background: #000;
+        }
+        
+        .cta-section h2 {
+            max-width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 28px;
+        }
+        
+        .cta-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 32px 40px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            opacity: 0.35;
+        }
+        
+        /* Responsive - Mobile */
+        @media (max-width: 600px) {
+            nav, section { padding-left: 24px; padding-right: 24px; }
+            nav { padding: 16px 24px; }
+            .nav-right a:not(.dl-btn) { display: none; }
+            .hero-btns, .cta-btns { flex-direction: column; align-items: center; }
+            .stats { flex-direction: column; gap: 24px; }
+            footer { flex-direction: column; gap: 12px; text-align: center; }
+            .hero-logo { width: 80px; height: 80px; }
+            .hero { padding: 100px 24px 60px; }
+            .hero p { font-size: 16px; }
+            .btn { padding: 12px 24px; font-size: 13px; }
+            .stat-value { font-size: 28px; }
+            .feature { padding: 28px; }
+            .feature h3 { font-size: 15px; }
+            .feature p { font-size: 13px; }
+            .code-body { font-size: 11px; padding: 16px; }
+            .what-item { padding: 10px 18px; font-size: 12px; }
+        }
+        
+        /* Responsive - Tablet */
+        @media (min-width: 601px) and (max-width: 1024px) {
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+            .code-wrap { grid-template-columns: 1fr; gap: 40px; }
+            .stats { gap: 40px; }
+            .hero-logo { width: 100px; height: 100px; }
+        }
+        
+        /* Responsive - Standard Desktop (1025px - 1439px) */
+        @media (min-width: 1025px) and (max-width: 1439px) {
+            .features-grid { grid-template-columns: repeat(3, 1fr); }
+            section { padding: 100px 60px; }
+            nav { padding: 20px 60px; }
+        }
+        
+        /* Responsive - Large Desktop / 1440p (1440px - 1919px) */
+        @media (min-width: 1440px) and (max-width: 1919px) {
+            body { font-size: 17px; }
+            nav { padding: 24px 80px; }
+            .logo { font-size: 20px; }
+            .logo svg { width: 36px; height: 36px; }
+            .nav-right a { font-size: 15px; }
+            .nav-right { gap: 40px; }
+            .dl-btn { padding: 12px 24px; font-size: 14px; }
+            section { padding: 140px 80px; }
+            .hero { padding: 140px 80px 100px; }
+            .hero-logo { width: 140px; height: 140px; }
+            h1 { font-size: clamp(56px, 8vw, 88px); }
+            .hero p { font-size: 20px; max-width: 550px; }
+            .btn { padding: 16px 32px; font-size: 15px; }
+            .stats { gap: 80px; margin-top: 100px; }
+            .stat-value { font-size: 42px; }
+            .stat-label { font-size: 13px; }
+            h2 { font-size: clamp(36px, 4vw, 56px); max-width: 700px; }
+            .feature { padding: 48px; }
+            .feature-icon { width: 48px; height: 48px; }
+            .feature h3 { font-size: 19px; }
+            .feature p { font-size: 15px; }
+            .what-item { padding: 16px 28px; font-size: 15px; }
+            .code-body { font-size: 14px; padding: 28px; }
+            footer { padding: 40px 80px; font-size: 14px; }
+        }
+        
+        /* Responsive - 4K / Ultra HD (1920px and above) */
+        @media (min-width: 1920px) {
+            html { font-size: 18px; }
+            body { font-size: 18px; }
+            nav { padding: 28px 120px; }
+            .logo { font-size: 22px; gap: 16px; }
+            .logo svg { width: 42px; height: 42px; }
+            .nav-right a { font-size: 16px; }
+            .nav-right { gap: 48px; }
+            .dl-btn { padding: 14px 28px; font-size: 15px; }
+            section { padding: 180px 120px; max-width: 2200px; margin: 0 auto; }
+            .hero { padding: 180px 120px 120px; min-height: 100vh; }
+            .hero-glow { width: 900px; height: 900px; }
+            .hero-logo { width: 180px; height: 180px; margin-bottom: 48px; }
+            .tag { font-size: 13px; letter-spacing: 2px; margin-bottom: 32px; }
+            h1 { font-size: clamp(64px, 7vw, 110px); letter-spacing: -4px; margin-bottom: 32px; }
+            .hero p { font-size: 22px; max-width: 650px; margin-bottom: 56px; line-height: 1.7; }
+            .hero-btns { gap: 20px; }
+            .btn { padding: 18px 40px; font-size: 16px; }
+            .stats { gap: 100px; margin-top: 120px; padding-top: 60px; }
+            .stat-value { font-size: 52px; }
+            .stat-label { font-size: 14px; margin-top: 8px; }
+            .section-label { font-size: 13px; letter-spacing: 2px; margin-bottom: 20px; }
+            h2 { font-size: clamp(44px, 4vw, 68px); max-width: 800px; margin-bottom: 64px; }
+            .features-grid { gap: 2px; }
+            .feature { padding: 56px; }
+            .feature-icon { width: 56px; height: 56px; margin-bottom: 28px; }
+            .feature h3 { font-size: 21px; margin-bottom: 14px; }
+            .feature p { font-size: 16px; line-height: 1.7; }
+            .what-item { padding: 18px 32px; font-size: 16px; }
+            .what-track { gap: 16px; }
+            .code-wrap { gap: 120px; }
+            .code-box { border-radius: 20px; }
+            .code-header { padding: 18px 24px; }
+            .code-dot { width: 12px; height: 12px; }
+            .code-body { font-size: 15px; line-height: 2.2; padding: 32px; }
+            .cta-section { padding: 200px 120px; }
+            .cta-section h2 { margin-bottom: 48px; }
+            .cta-btns { gap: 20px; }
+            footer { padding: 48px 120px; font-size: 15px; }
+        }
+        
+        /* Responsive - 5K / Super Ultra HD (2560px and above) */
+        @media (min-width: 2560px) {
+            html { font-size: 20px; }
+            section { max-width: 2800px; padding: 220px 160px; }
+            nav { padding: 36px 160px; }
+            .hero { padding: 220px 160px 160px; }
+            .hero-logo { width: 220px; height: 220px; }
+            h1 { font-size: 120px; }
+            .hero p { font-size: 26px; max-width: 750px; }
+            .stat-value { font-size: 64px; }
+            h2 { font-size: 76px; max-width: 1000px; }
+            .feature { padding: 72px; }
+            .feature-icon { width: 64px; height: 64px; }
+            .feature h3 { font-size: 24px; }
+            .feature p { font-size: 18px; }
+            footer { padding: 60px 160px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">
+            <svg viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect width="128" height="128" rx="28" fill="#0a0a0a"/>
+                <circle cx="64" cy="64" r="35" stroke="url(#nav-grad)" stroke-width="2" stroke-dasharray="8 4" opacity="0.5"/>
+                <circle cx="64" cy="64" r="50" stroke="url(#nav-grad)" stroke-width="1.5" stroke-dasharray="12 6" opacity="0.3"/>
+                <g transform="translate(64, 64)">
+                    <polygon points="0,-28 4,-8 0,-12 -4,-8" fill="url(#star-grad)" transform="rotate(0)"/>
+                    <polygon points="0,-28 4,-8 0,-12 -4,-8" fill="url(#star-grad)" transform="rotate(90)"/>
+                    <polygon points="0,-28 4,-8 0,-12 -4,-8" fill="url(#star-grad)" transform="rotate(180)"/>
+                    <polygon points="0,-28 4,-8 0,-12 -4,-8" fill="url(#star-grad)" transform="rotate(270)"/>
+                    <circle r="6" fill="url(#star-grad)"/>
+                    <circle r="3" fill="#fef3c7"/>
+                </g>
+                <defs>
+                    <linearGradient id="nav-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#22d3ee"/>
+                        <stop offset="100%" stop-color="#a78bfa"/>
+                    </linearGradient>
+                    <linearGradient id="star-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#fbbf24"/>
+                        <stop offset="100%" stop-color="#f59e0b"/>
+                    </linearGradient>
+                </defs>
+            </svg>
+            NovaTrace
+        </div>
+        <div class="nav-right">
+            <a href="#features">Features</a>
+            <a href="#artifacts">Artifacts</a>
+            <a href="#start">Get started</a>
+            <a href="https://github.com/alankalix/NovaTrace-IR-Kit">GitHub</a>
+            <a href="https://github.com/alankalix/NovaTrace-IR-Kit/releases" class="dl-btn">Download</a>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <div class="hero-glow"></div>
+        
+        <svg class="hero-logo" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="trace-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#22d3ee"/>
+                    <stop offset="50%" stop-color="#3b82f6"/>
+                    <stop offset="100%" stop-color="#a78bfa"/>
+                </linearGradient>
+                <linearGradient id="nova-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#fbbf24"/>
+                    <stop offset="100%" stop-color="#f59e0b"/>
+                </linearGradient>
+            </defs>
+            <circle cx="200" cy="200" r="190" fill="#0a0a0a" stroke="#1a1a1a" stroke-width="2"/>
+            <circle cx="200" cy="200" r="60" stroke="url(#trace-grad)" stroke-width="2" stroke-dasharray="10 5" opacity="0.6"/>
+            <circle cx="200" cy="200" r="100" stroke="url(#trace-grad)" stroke-width="2" stroke-dasharray="15 8" opacity="0.4"/>
+            <circle cx="200" cy="200" r="140" stroke="url(#trace-grad)" stroke-width="2" stroke-dasharray="20 10" opacity="0.25"/>
+            <g transform="translate(200, 200)">
+                <polygon points="0,-70 8,-20 0,-28 -8,-20" fill="url(#nova-grad)" transform="rotate(0)"/>
+                <polygon points="0,-70 8,-20 0,-28 -8,-20" fill="url(#nova-grad)" transform="rotate(90)"/>
+                <polygon points="0,-70 8,-20 0,-28 -8,-20" fill="url(#nova-grad)" transform="rotate(180)"/>
+                <polygon points="0,-70 8,-20 0,-28 -8,-20" fill="url(#nova-grad)" transform="rotate(270)"/>
+                <polygon points="0,-50 6,-20 0,-25 -6,-20" fill="url(#nova-grad)" transform="rotate(45)"/>
+                <polygon points="0,-50 6,-20 0,-25 -6,-20" fill="url(#nova-grad)" transform="rotate(135)"/>
+                <polygon points="0,-50 6,-20 0,-25 -6,-20" fill="url(#nova-grad)" transform="rotate(225)"/>
+                <polygon points="0,-50 6,-20 0,-25 -6,-20" fill="url(#nova-grad)" transform="rotate(315)"/>
+                <circle r="16" fill="url(#nova-grad)"/>
+                <circle r="8" fill="#fef3c7"/>
+            </g>
+            <circle cx="200" cy="60" r="6" fill="url(#trace-grad)"/>
+            <circle cx="340" cy="200" r="6" fill="url(#trace-grad)"/>
+            <circle cx="200" cy="340" r="6" fill="url(#trace-grad)"/>
+            <circle cx="60" cy="200" r="6" fill="url(#trace-grad)"/>
+        </svg>
+        
+        <span class="tag"><b>Incident Response Toolkit</b></span>
+        <h2>Respond faster.</h2>
+        <p>Forensic artifact collection for Windows. One script, 50+ artifacts, zero dependencies.</p>
+        
+        <div class="hero-btns">
+            <a href="https://github.com/alankalix/NovaTrace-IR-Kit/releases" class="btn btn-white">Download v1.0.0</a>
+            <a href="https://github.com/alankalix/NovaTrace-IR-Kit" class="btn btn-outline">View source</a>
+        </div>
+        
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-value">50+</div>
+                <div class="stat-label">Artifacts</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">&lt;5m</div>
+                <div class="stat-label">Direct Run</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">&lt;10m</div>
+                <div class="stat-label">Live Response</div>
+            </div>
+            <div class="stat">
+                <div class="stat-value">0</div>
+                <div class="stat-label">Dependencies</div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features-section" id="features">
+        <span class="section-label">Why NovaTrace</span>
+        <h2>Built for responders who need answers fast.</h2>
+        
+        <div class="features-grid">
+            <div class="feature">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
+                </svg>
+                <h3>Single file</h3>
+                <p>One PowerShell script. No agents, no dependencies, no configuration needed.</p>
+            </div>
+            <div class="feature">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+                <h3>Comprehensive</h3>
+                <p>Collects processes, network, persistence, execution artifacts, registry hives, and event logs.</p>
+            </div>
+            <div class="feature">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                </svg>
+                <h3>Forensically sound</h3>
+                <p>Read-only operations. No system modifications. SHA256 hash manifest.</p>
+            </div>
+            <div class="feature">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                </svg>
+                <h3>Live Response ready</h3>
+                <p>Optimized for Microsoft Defender EDR. Upload, run, retrieve.</p>
+            </div>
+            <div class="feature">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                    <polyline points="14 2 14 8 20 8"/>
+                    <line x1="16" y1="13" x2="8" y2="13"/>
+                    <line x1="16" y1="17" x2="8" y2="17"/>
+                    <polyline points="10 9 9 9 8 9"/>
+                </svg>
+                <h3>Organized output</h3>
+                <p>Logical folder structure with SHA256 hash manifest. Ready for parsing tools.</p>
+            </div>
+            <div class="feature">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <polyline points="4 17 10 11 4 5"/>
+                    <line x1="12" y1="19" x2="20" y2="19"/>
+                </svg>
+                <h3>Tool compatible</h3>
+                <p>Works with Timeline Explorer, Eric Zimmerman tools, any forensic platform.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="what-section" id="artifacts">
+        <span class="section-label">Collection scope</span>
+        <h2>Everything you need.</h2>
+        
+        <!-- Row 1: Left to Right -->
+        <div class="what-wrapper">
+            <div class="what-track row1">
+                <div class="what-item">Processes & DLLs</div>
+                <div class="what-item">Network connections</div>
+                <div class="what-item">DNS cache</div>
+                <div class="what-item">Scheduled tasks</div>
+                <div class="what-item">Registry hives</div>
+                <div class="what-item">Prefetch files</div>
+                <div class="what-item">Amcache</div>
+                <div class="what-item">ShimCache</div>
+                <div class="what-item">Browser history</div>
+                <!-- Duplicate for seamless loop -->
+                <div class="what-item">Processes & DLLs</div>
+                <div class="what-item">Network connections</div>
+                <div class="what-item">DNS cache</div>
+                <div class="what-item">Scheduled tasks</div>
+                <div class="what-item">Registry hives</div>
+                <div class="what-item">Prefetch files</div>
+                <div class="what-item">Amcache</div>
+                <div class="what-item">ShimCache</div>
+                <div class="what-item">Browser history</div>
+            </div>
+        </div>
+        
+        <!-- Row 2: Right to Left -->
+        <div class="what-wrapper">
+            <div class="what-track row2">
+                <div class="what-item">Event logs</div>
+                <div class="what-item">PowerShell history</div>
+                <div class="what-item">USB artifacts</div>
+                <div class="what-item">WMI subscriptions</div>
+                <div class="what-item">BITS jobs</div>
+                <div class="what-item">Jump lists</div>
+                <div class="what-item">LNK files</div>
+                <div class="what-item">SRUM database</div>
+                <div class="what-item">Persistence mechanisms</div>
+                <!-- Duplicate for seamless loop -->
+                <div class="what-item">Event logs</div>
+                <div class="what-item">PowerShell history</div>
+                <div class="what-item">USB artifacts</div>
+                <div class="what-item">WMI subscriptions</div>
+                <div class="what-item">BITS jobs</div>
+                <div class="what-item">Jump lists</div>
+                <div class="what-item">LNK files</div>
+                <div class="what-item">SRUM database</div>
+                <div class="what-item">Persistence mechanisms</div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="code-section" id="start">
+        <div class="code-wrap">
+            <div>
+                <span class="section-label">Get started</span>
+                <h2>Three commands.</h2>
+                <p style="opacity: 0.45; line-height: 1.7; margin-bottom: 32px;">Works on Windows 10, 11, Server 2016+. Run locally or via Live Response.</p>
+                <a href="https://github.com/alankalix/NovaTrace-IR-Kit/releases" class="btn btn-white">Download latest</a>
+            </div>
+            
+            <div class="code-box">
+                <div class="code-header">
+                    <div class="code-dot"></div>
+                    <div class="code-dot"></div>
+                    <div class="code-dot"></div>
+                </div>
+                <div class="code-body">
+<span class="c"># Run collection</span><br>
+<span class="g">.\NovaTrace.ps1</span><br>
+<br>
+<span class="c"># Custom output path</span><br>
+<span class="g">.\NovaTrace.ps1</span> <span class="p">-OutputPath "D:\IR"</span><br>
+<br>
+<span class="c"># Defender Live Response</span><br>
+<span class="g">putfile</span> NovaTrace.ps1<br>
+<span class="g">run</span> NovaTrace.ps1<br>
+<span class="g">getfile</span> <span class="p">"C:\NovaTrace_*.zip"</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta-section">
+        <h2>Open source. Free forever.</h2>
+        <div class="cta-btns">
+            <a href="https://github.com/alankalix/NovaTrace-IR-Kit/releases" class="btn btn-white">Download</a>
+            <a href="https://github.com/alankalix/NovaTrace-IR-Kit" class="btn btn-outline">Star on GitHub</a>
+        </div>
+    </section>
+    
+    <footer>
+        <span>NovaTrace IR Kit v1.0.0 - BSD-3-Clause</span>
+        <span>Built by Prasanth</span>
+    </footer>
+</body>
+</html>

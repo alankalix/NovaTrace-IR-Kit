@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f172a"/>
+      <stop offset="100%" style="stop-color:#1e293b"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#06b6d4"/>
+      <stop offset="100%" style="stop-color:#8b5cf6"/>
+    </linearGradient>
+    <linearGradient id="star" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24"/>
+      <stop offset="100%" style="stop-color:#f59e0b"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="128" height="128" rx="24" fill="url(#bg)"/>
+  
+  <!-- Trace circles -->
+  <circle cx="64" cy="64" r="35" stroke="url(#accent)" stroke-width="2" fill="none" stroke-dasharray="8,4" opacity="0.6"/>
+  <circle cx="64" cy="64" r="50" stroke="url(#accent)" stroke-width="2" fill="none" stroke-dasharray="12,6" opacity="0.4"/>
+  
+  <!-- Nova star -->
+  <g transform="translate(64, 64)">
+    <polygon points="0,-28 4,-8 0,-12 -4,-8" fill="url(#star)" transform="rotate(0)"/>
+    <polygon points="0,-28 4,-8 0,-12 -4,-8" fill="url(#star)" transform="rotate(90)"/>
+    <polygon points="0,-28 4,-8 0,-12 -4,-8" fill="url(#star)" transform="rotate(180)"/>
+    <polygon points="0,-28 4,-8 0,-12 -4,-8" fill="url(#star)" transform="rotate(270)"/>
+    <polygon points="0,-20 3,-8 0,-10 -3,-8" fill="url(#star)" transform="rotate(45)"/>
+    <polygon points="0,-20 3,-8 0,-10 -3,-8" fill="url(#star)" transform="rotate(135)"/>
+    <polygon points="0,-20 3,-8 0,-10 -3,-8" fill="url(#star)" transform="rotate(225)"/>
+    <polygon points="0,-20 3,-8 0,-10 -3,-8" fill="url(#star)" transform="rotate(315)"/>
+    <circle r="6" fill="url(#star)"/>
+    <circle r="3" fill="#fef3c7"/>
+  </g>
+  
+  <!-- Detection dots -->
+  <circle cx="64" cy="20" r="4" fill="url(#accent)"/>
+  <circle cx="108" cy="64" r="4" fill="url(#accent)"/>
+  <circle cx="64" cy="108" r="4" fill="url(#accent)"/>
+  <circle cx="20" cy="64" r="4" fill="url(#accent)"/>
+</svg>
