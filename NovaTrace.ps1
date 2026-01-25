@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-    NovaTrace IR Kit v1.1.0
+    NovaTrace IR Kit v1.0.0
     Enterprise Forensic Evidence Collector for Windows
     
 .DESCRIPTION
@@ -11,7 +11,7 @@
     Writes directly to ZIP file to minimize disk footprint.
     
 .NOTES
-    Version: 1.1.0
+    Version: 1.0.0
     Author: Prasanth
     License: BSD-3-Clause
     Tested: Windows 10/11, Server 2016+
