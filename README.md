@@ -35,6 +35,8 @@
 
 Unlike traditional forensic tools that require installation or complex deployment, NovaTrace is designed for rapid deployment scenarios where time is critical and system access may be limited - such as Microsoft Defender EDR Live Response sessions.
 
+Note: NovaTrace was built primarily to speed up my own incident response workflows, and some of the included modules may overlap with functionality found in other tools and scripts that already exist within the cybersecurity community.
+
 ### Key Capabilities
 
 | Capability | Description |
