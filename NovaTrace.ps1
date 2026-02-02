@@ -229,7 +229,7 @@ function Show-Banner {
     Write-Host "  =============================================" -ForegroundColor $script:C.Bar
     Write-Host ""
     Write-Host "              N O V A T R A C E" -ForegroundColor $script:C.Title
-    Write-Host "        Forensic Evidence Collector v1.1.0" -ForegroundColor $script:C.Dim
+    Write-Host "        Forensic Evidence Collector v1.0.0" -ForegroundColor $script:C.Dim
     Write-Host ""
     Write-Host "  =============================================" -ForegroundColor $script:C.Bar
     Write-Host ""
