@@ -1027,7 +1027,7 @@ if ($script:FileHashes.Count -gt 0) {
     Add-ToZip -EntryPath "FileHashes.csv" -Content $hashCsv
 }
 
-$manifest = [PSCustomObject]@{ ToolName = "NovaTrace IR Kit"; ToolVersion = "1.1.0"; CollectionStart = $StartTime; CollectionEnd = $endTime; Duration = $duration; Hostname = $Hostname; IsAdmin = $IsAdmin; Attempted = $script:Stats.Total; Collected = $script:Stats.Success; Failed = $script:Stats.Failed; Skipped = $script:Stats.Skipped; SuccessRate = "$successRate%" }
+$manifest = [PSCustomObject]@{ ToolName = "NovaTrace IR Kit"; ToolVersion = "1.0.0"; CollectionStart = $StartTime; CollectionEnd = $endTime; Duration = $duration; Hostname = $Hostname; IsAdmin = $IsAdmin; Attempted = $script:Stats.Total; Collected = $script:Stats.Success; Failed = $script:Stats.Failed; Skipped = $script:Stats.Skipped; SuccessRate = "$successRate%" }
 $manifestCsv = ($manifest | ConvertTo-Csv -NoTypeInformation) -join "`r`n"
 Add-ToZip -EntryPath "Manifest.csv" -Content $manifestCsv
 
@@ -1069,7 +1069,7 @@ $readmeContent = @"
   5 - Cross-reference timestamps across artifacts
 
 ================================================================================
-                           NovaTrace IR Kit v1.1.0
+                           NovaTrace IR Kit v1.0.0
 ================================================================================
 "@
 Add-ToZip -EntryPath "README.txt" -Content $readmeContent
